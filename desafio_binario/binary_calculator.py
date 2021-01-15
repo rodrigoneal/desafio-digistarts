@@ -1,61 +1,38 @@
-from bitstring import BitArray
-
-
 class BinaryCalculator:
 
+    def __init__(self, value):
+        self.value = int(value, 2)
 
-
-    def __init__(self, num1: str, num2: str):
-        self.num1 = BitArray(bin=num1)
-        self.num2 = BitArray(bin=num2)
-
-    def sum_binary(self, verbose=False):
-        num1 = self.num1.int
-        num2 = self.num2.int
-        result = bin(num1 + num2)
-        if verbose:
-            size = 8 - len(result)
-            if size > 0:
-                return result.replace('0b', '0' * (size + 2))
+    def __add__(self, other):
+        result = bin(self.value + other.value)
+        size = 8 - len(result) + 2 if len(result) < 8 else None
+        if size:
+            result = result.replace('0b', '0' * size)
         return result
 
-    def sub_binary(self, verbose=False):
-        num1 = self.num1.int
-        num2 = self.num2.int
-        result = bin(num1 - num2)
-        if verbose:
-            size = 8 - len(result)
-            if size > 0:
-                return result.replace('0b', '0' * (size + 2))
+    def __sub__(self, other):
+        result = bin(self.value - other.value)
+        size = 8 - len(result) + 2 if len(result) < 8 else None
+        if size:
+            result = result.replace('0b', '0' * size)
         return result
 
-    def mul_binary(self, verbose: bool = False):
-        num1 = self.num1.int
-        num2 = self.num2.int
-        result = bin(num1 * num2)
-        if verbose:
-            size = 8 - len(result)
-            if size > 0:
-                return result.replace('0b', '0' * (size + 2))
+    def __mul__(self, other):
+        result = bin(self.value * other.value)
+        size = 8 - len(result) + 2 if len(result) < 8 else None
+        if size:
+            result = result.replace('0b', '0' * size)
         return result
 
-    def div_binary(self, verbose: bool = False):
-        num1 = self.num1.int
-        num2 = self.num2.int
-        to_int = (int(num1 / num2))
-        result = bin(to_int)
-        if verbose:
-            size = 8 - len(result)
-            if size > 0:
-                return result.replace('0b', '0' * (size + 2))
+    def __mod__(self, other):
+        result = bin(self.value % other.value)
+        size = 8 - len(result) + 2 if len(result) < 8 else None
+        if size:
+            result = result.replace('0b', '0' * size)
         return result
 
-    def mod_binary(self, verbose: bool = False):
-        num1 = self.num1.int
-        num2 = self.num2.int
-        result = bin(num1 % num2)
-        if verbose:
-            size = 8 - len(result)
-            if size > 0:
-                return result.replace('0b', '0' * (size + 2))
-        return result
+    def __repr__(self):
+        return f'BinaryCalculator({bin(self.value)[2:0]})'
+
+
+
