@@ -1,5 +1,5 @@
 import unittest
-from binary_calculator import BinaryCalculator
+from desafio_binario.binary_calculator import BinaryCalculator
 
 
 class TestBinaryCalculator(unittest.TestCase):
