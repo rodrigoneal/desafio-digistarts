@@ -12,6 +12,22 @@ req.add_argument(
 ), 400
 
 
+def verifica_numeros():
+    """
+    Verifica se o tamanho de numeros é igual valor limite
+    :return: lista com os numeros unicos e ordenados
+    """
+    resultado = list()
+    if len(numeros) == limite:
+        for num in numeros:
+            n = int(num["number"])
+            if n not in resultado:
+                resultado.append(n)
+        resultado.sort()
+        numeros.clear()
+        return resultado
+
+
 class ListaConjuntos(Resource):
     """
     A classe é usada pela biblioteca flask_restful trabalhar os verbos http
@@ -36,7 +52,7 @@ class ListaConjuntos(Resource):
         # ID: usada como identificar para facilita o acessos e modificações
         global id, limite
         if (
-            limite > 0
+                limite > 0
         ):  # Só vai appenda se o valor de limite foi passado antes, senão vai returnar status_code:400
             numero = req.parse_args()
             number = {"id": id, **numero}
@@ -46,18 +62,11 @@ class ListaConjuntos(Resource):
         else:
             return {"message": "the limit value must be passed before"}, 400
 
-        if (
-            len(numeros) == limite
-        ):# :return: Lista com valores unicos em ordem crescente
-            resultado = []
-            for num in numeros:
-                n = int(num["number"])
-                if n not in resultado:
-                    resultado.append(n)
-            resultado.sort()
-            numeros.clear()
+        resultado = verifica_numeros()
+        if resultado:
             id = 0
             return resultado
+
         return number, 201
 
 
@@ -84,6 +93,7 @@ class ListaConjunto(Resource):
     """
      A classe é usada pela biblioteca flask_restful trabalhar os verbos http
      """
+
     def get(self, num_id):
         """
         Procura dentro da varialvel numeros se há o id passado por endpoint
@@ -105,6 +115,7 @@ class ListaConjunto(Resource):
         """
         numero = req.parse_args()
         global id, limite
+
         num_id = int(num_id)
         if limite > 0:
             if numeros:
@@ -115,6 +126,10 @@ class ListaConjunto(Resource):
             number = {"id": num_id, **numero}
             numeros.append(number)
             id = num_id + 1
+            resultado = verifica_numeros()
+            if resultado:
+                id = 0
+                return resultado
             return {"message": f"id '{num_id}' successfully added"}, 201
         return {"message": "the limit value must be passed before"}, 400
 
@@ -131,6 +146,5 @@ class ListaConjunto(Resource):
             for n in range(len(numeros)):
                 if numeros[n]['id'] == num_id:
                     del numeros[n]
-                    return {'message': f'The id {num_id} has been deleted'}, 204
-        return {'message':f" id '{num_id}' not found"}, 404
-
+                    return {'message': f'The id {num_id} has been deleted'}
+        return {'message': f" id '{num_id}' not found"}, 404

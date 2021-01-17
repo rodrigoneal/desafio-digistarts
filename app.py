@@ -9,6 +9,7 @@ def create_app():
     api.add_resource(ListaConjuntos, "/")
     api.add_resource(ListaConjunto, "/id/<num_id>")
     api.add_resource(Limite, "/limit/<limit>")
+
     return app
 
 
