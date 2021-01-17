@@ -1,4 +1,4 @@
-# author
+from typing import Any
 from flask_restful import Resource, reqparse
 
 numeros = (
@@ -30,9 +30,15 @@ def verifica_numeros():
         id = 0
         return resultado
 
+# Eu poderia colocar dentro da função pois só está sendo usado dentro de uma unica função, mas não gosto de staticmethod
+def id_not_found(numeros: list[dict], id: int) -> Any:
+    """
+    Procura o id passdo dentro da lista numeros
+    :param numeros: lista que armazena o dicionario
+    :param id: id recebido por endpoint
+    :return: 404 se não encotrar o id ou dicionario com o id pesquisado
+    """
 
-# lidando com erros
-def id_not_found(numeros, id):
     for num in numeros:
         if num["id"] == id:
             return num
@@ -40,6 +46,11 @@ def id_not_found(numeros, id):
 
 
 def limit_not_defined(func):
+    """
+    Decorador que verifica se o valor de limite foi passado e quebra a função se não tiver
+    :param func: função decorada
+    :return: None ou quebra a função com um status_code 400
+    """
     global limite
 
     def deco_function(*args, **kwargs):
@@ -120,6 +131,7 @@ class ListaConjunto(Resource):
         num_id = int(num_id)
         resultado = id_not_found(numeros, num_id)
         return resultado
+
     @limit_not_defined
     def put(self, num_id):
         """
@@ -145,6 +157,7 @@ class ListaConjunto(Resource):
         if resultado: return verifica_numeros()
 
         return {"message": f"id '{num_id}' successfully added"}, 201
+
     @limit_not_defined
     def delete(self, num_id):
         """
