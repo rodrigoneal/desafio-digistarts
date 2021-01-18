@@ -1,10 +1,21 @@
 import requests
+import pytest
 from random import randint
 
 
 def test_app_is_alive():
     response = requests.get('http://127.0.0.1:5000/')
     assert response.status_code == 200
+
+
+def test_get():
+    response = requests.get('http://127.0.0.1:5000/')
+    assert response.status_code == 200
+
+
+def test_post_without_passing_limit():
+    response = requests.post('http://127.0.0.1:5000/', json={'number': 5})
+    assert response.status_code == 201
 
 
 def test_status_code_404_not_defined_limit():
