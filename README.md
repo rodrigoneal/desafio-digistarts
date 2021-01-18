@@ -9,10 +9,10 @@
 <h5>Limite:</h5>
 <p>O primeiro valor passado tem que ser o limite por verbo <em>POST</em> <code>http://127.0.0.1:5000/limit/<></code>por endpoint.
 <br>
-Exemplo <code>http://127.0.0.1:5000/limit/<5></code> será definido o valor de até 5 numeros aceitos
+Exemplo <code>http://127.0.0.1:5000/limit/<5></code> será definido o valor de até 5 números aceitos
 </p>
 <p>
-Esse valor será o valor de limite quando a quantidade de numero alcançar o limite ira retornar uma lista com os valores unicos e
+Esse valor será o valor de limite quando a quantidade de número alcançar o limite ira retornar uma lista com os valores únicos e
 ordenados em ordem crescente
 </p>
 <b>1<=N<=1000</b>
@@ -23,7 +23,7 @@ com o verbo <em>POST</em>
 </p>
 <p>
 Você também pode consultar todos os valores que foram passados com o verbo <em>GET</em> na url <code>http://127.0.0.1:5000/</code>.
-<br>returnará lista JSON com os valores dentro
+<br>retornará lista JSON com os valores dentro
 <br>Exemplo:
 <br>
 <code>
@@ -73,7 +73,7 @@ Tentando acessar uma <b>id</b> não valida: codigo de status 404 <b>NOT REQUEST<
 <h2 align="center">Informações</h2>
 <ul>
 <li style="margin:10px">
-    Tive que fazer bastante uso da função (Global) mesmo sabendo que não é uma boa pratica, pois não havia banco de dados para pegar id ou salvar os numeros
+    Tive que fazer bastante uso da função (Global) mesmo sabendo que não é uma boa prática, pois não havia banco de dados para pegar id ou salvar os numeros
 </li>
 <li style="margin:10px">
     Foram rodados testes no Postman
