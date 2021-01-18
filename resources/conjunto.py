@@ -30,19 +30,8 @@ def verifica_numeros():
         id = 0
         return resultado
 
-# Eu poderia colocar dentro da função pois só está sendo usado dentro de uma unica função, mas não gosto de staticmethod
-def id_not_found(numeros: list[dict], id: int) -> Any:
-    """
-    Procura o id passdo dentro da lista numeros
-    :param numeros: lista que armazena o dicionario
-    :param id: id recebido por endpoint
-    :return: 404 se não encotrar o id ou dicionario com o id pesquisado
-    """
 
-    for num in numeros:
-        if num["id"] == id:
-            return num
-    return {"message": "id not found"}, 404
+
 
 
 def limit_not_defined(func):
@@ -118,6 +107,19 @@ class Limite(Resource):
 
 
 class ListaConjunto(Resource):
+    @staticmethod
+    def id_not_found(numeros: list[dict], id: int) -> Any:
+        """
+        Procura o id passdo dentro da lista numeros
+        :param numeros: lista que armazena o dicionario
+        :param id: id recebido por endpoint
+        :return: 404 se não encotrar o id ou dicionario com o id pesquisado
+        """
+
+        for num in numeros:
+            if num["id"] == id:
+                return num
+        return {"message": "id not found"}, 404
     """
     A classe é usada pela biblioteca flask_restful trabalhar os verbos http
     """
@@ -129,7 +131,7 @@ class ListaConjunto(Resource):
         :return:Se Não Encontrar:  Uma mensagem com o status_code 404
         """
         num_id = int(num_id)
-        resultado = id_not_found(numeros, num_id)
+        resultado = self.id_not_found(numeros, num_id)
         return resultado
 
     @limit_not_defined
