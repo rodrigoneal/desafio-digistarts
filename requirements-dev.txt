@@ -1,0 +1,6 @@
+black==20.8b1
+Flask==1.1.2
+Flask-RESTful==0.3.8
+pytest==6.2.1
+pytest-flask==1.1.0
+
